@@ -14,6 +14,8 @@ black = (0,0,0)
 white = (255,255,255)
 font = pygame.font.SysFont('sans',50)
 
+game_level = 0
+
 player1_bar = 310
 player1_change = 0
 score1 = 0
@@ -29,6 +31,8 @@ ball_x_change = -ball_speed
 ball_y_change = 0
 
 running = True
+
+level = True
  
 while running :
     screen.fill(black)
@@ -37,10 +41,11 @@ while running :
     
     pygame.draw.rect(screen,white, (ball_x,ball_y,15,15))  
     
+    #ball
     ball_x += ball_x_change
-    ball_y += ball_y_change
-   
-   #for Player 1  
+    ball_y += ball_y_change  
+    
+    #for Player 1  
     if ball_x<=10 and ball_y>=player1_bar and ball_y<=(player1_bar+100):
         if ball_y>=player1_bar and ball_y<player1_bar+49:
             rad = random.randint(1, 4)
@@ -67,9 +72,11 @@ while running :
         score2 += 1
         ball_x = 20
         ball_y = 340
-        player1_bar=310
-        player1_change=0
-        player2_bar=310
+        player1_bar = 310
+        player2_bar = 310
+        game_level += 1
+        if (game_level%4==0): #tang_do_kho
+            ball_speed += 0.05 
         time.sleep(0.7)
 
     #for Player 2  
@@ -99,9 +106,11 @@ while running :
         score1 += 1
         ball_x = 689
         ball_y = 340
-        player1_bar=310
-        player1_change=0
-        player2_bar=310
+        player1_bar = 310
+        player2_bar = 310
+        game_level += 1
+        if(game_level%4==0): #tang_do_kho
+            ball_speed += 0.05 
         time.sleep(0.7)
   
     #screen limit
@@ -137,15 +146,15 @@ while running :
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_UP:
                 if player1_bar>0 and player1_bar<620:
-                    player1_bar += -30
+                    player1_bar += -40
             elif event.key == pygame.K_DOWN:
                 if player1_bar>=0 and player1_bar<620:
-                    player1_bar += 30
+                    player1_bar += 40
             elif event.key==pygame.K_KP_ENTER:    
                 main()
             # elif event.key == pygame.K_LEFT: 
             # elif event.key == pygame.K_RIGHT:
-    player1_bar += player1_change     
+               
     pygame.draw.rect(screen,white, (10,player1_bar,10,130))
     pygame.draw.rect(screen,white, (700,player2_bar,10,130))     
     
